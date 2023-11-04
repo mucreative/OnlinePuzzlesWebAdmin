@@ -1,0 +1,617 @@
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    .row {
+
+        margin: 10px auto;
+        font-size: 25px;
+        font-weight: bold;
+
+    }
+
+    .table>tbody>tr>td {
+        vertical-align: middle !important;
+    }
+</style>
+
+
+
+<div class="row">
+    <h3 style="color:#455a64">Categories</h3>
+    <div>
+        <a href="" style="position: absolute; right: 0; margin-right: 75px;" class="btn btn-primary btn-rounded mb-4"
+            data-toggle="modal" data-target="#modalAddForm"><span class="material-icons">add_circle</span>Add
+            Category</a>
+    </div>
+</div>
+</div>
+<table class="table table-striped">
+    <tbody id="categories" style="vertical-align: middle;">
+
+    </tbody>
+</table>
+<h6>© 2022 Leenah Albanna All Rights Reserved</h6>
+
+</div>
+
+
+
+<div class="modal fade" id="modalAddForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center" style="background-color: #eceff1;">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #801d46; font-family:sans-serif;">Add
+                    Category</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <form id="category-form">
+                    <div class="form-group">
+                        <label for="category-name">Category title</label>
+                        <input type="text" class="form-control" id="category-name" />
+
+                        <div class="invalid-feedback">
+                            Please enter a category title.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category-thumbnail">Category Image</label>
+                        <input type="file" class="form-control" id="category-thumbnail" accept="image/*" />
+                        <div class="invalid-feedback">
+                            Please choose a valid image.
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" style="text-align: center; align-items: center;">
+                        <img id="selected-thumbnail" height="150" src="#" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="progress">
+                            <div class="progress-bar" id="upload-progress" style="width:0%">0%</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button id="save-category" type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+                <div id="result">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+<!--//For deleting the category by key-->
+<script>
+    $(document).on('click', '#delete-button', function () {
+        // alert($(this).closest('tr').find('td:first').text());
+        var database = firebase.database().ref("categories");
+        database.child($(this).closest('tr').find('td:first').text()).remove();
+    });
+</script>
+
+<!--For editing the category by key-->
+
+
+<!---->
+<div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center" style="background-color: #eceff1;">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #801d46; font-family:sans-serif;">Edit
+                    Category</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeEdit">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <form id="category-edit-form">
+                    <div class="form-group">
+                        <label for="category-edit-key">Category number</label>
+                        <input type="text" class="form-control" id="category-edit-key" readonly />
+                    </div>
+
+                        <div class="form-group" >
+
+                        <label for="category-edit-name">Update category title</label>
+                        <input type="text" class="form-control" id="category-edit-name" />
+
+                        <div class="invalid-feedback">
+                            Please enter a category title
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label for="category-edit-thumbnail">Update the Image</label>
+                        <input type="file" class="form-control" id="category-edit-thumbnail" />
+                        <div class="invalid-feedback">
+                            Please choose a valid image thumbnail
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" style="text-align: center; align-items: center;">
+                        <img id="selected-edit-thumbnail"  height="150" src="#" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="progress">
+                            <div class="progress-bar" id="upload-progress-edit" style="width:0%">0%</div>
+                        </div>
+                    </div>
+                    <div class="from-group">
+                        <div class="modal-footer d-flex justify-content-center">
+
+                        <button id="save-edit-category" type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+                <div id="result-edit">
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<!---->
+<script>
+
+    $(document).on('click', '#edit-button', function () {
+        // $("#category-edit-form").fadeIn();
+
+        //scroll to the form
+        // var elmntToView = document.getElementById("category-edit-form");
+        // elmntToView.scrollIntoView();
+
+        // console.log($(this).closest('tr').find('td:first').text());
+        //set the current category key
+        $("#category-edit-key").val($(this).closest('tr').find('td:first').text());
+        //set the current category title
+        $("#category-edit-name").val(document.getElementById("categories").rows[Number.parseInt($(this).closest('tr').find('td:first').text() - 1)].cells[1].innerHTML);
+
+    });
+</script>
+
+<!--//Edit category logic-->
+<script>
+    var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+    $("#selected-edit-thumbnail").hide();
+    function previewThumbnailEdit(thumbnail) {
+        if (thumbnail.files && thumbnail.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#selected-edit-thumbnail").attr('src', e.target.result);
+                $("#selected-edit-thumbnail").fadeIn();
+            }
+            reader.readAsDataURL(thumbnail.files[0]);
+        }
+    }
+
+    $("#category-edit-thumbnail").change(function () {
+        previewThumbnailEdit(this);
+    });
+
+    $("#save-edit-category").click(function () {
+        $("#category-edit-name").removeClass("is-invalid");
+        $("#category-edit-thumbnail").removeClass("is-invalid");
+
+        var catkey = $("#category-edit-key").val();
+        var catname = $("#category-edit-name").val();
+
+        var thumbnail = $("#category-edit-thumbnail").prop("files")[0];
+
+        var database = firebase.database().ref("categories/" + catkey);
+
+        database.once("value").then(function (snapshot) {
+            // update title only
+            if (thumbnail == null) {
+                if (!catname) {
+                    $("#category-name").addClass("is-invalid");
+                    return;
+                }
+
+
+                database.child("n").set(catname, function (err) {
+                    if (err) {
+                        $("#result-edit").attr("class", "alert alert-danger");
+                        $("#result-edit").html(err.message);
+                    } else {
+                        $("#result-edit").attr("class", "alert alert-success");
+                        $("#result-edit").html("Category changes has been saved");
+                    }
+                    resetFormEdit();
+                });
+
+            } else {
+                // update title and image
+                if (!catname) {
+                    $("#category-name").addClass("is-invalid");
+                    return;
+                }
+                if ($.inArray(thumbnail["type"], validImageTypes) < 0) {
+                    $("#category-thumbnail").addClass("is-invalid");
+                    return;
+                }
+
+                //1. upload the selected thumbnail to firebase storage
+                var name = thumbnail["name"];
+                var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                var thumbname = new Date().getTime();
+
+                var storageRef = firebase.storage().ref(catname + "/" + thumbname + ext);
+
+                var uploadTask = storageRef.put(thumbnail);
+
+                uploadTask.on("state_changed",
+
+                    function progress(snapshot) {
+                        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                        $("#upload-progress-edit").html(Math.round(percentage) + "%");
+                        $("#upload-progress-edit").attr("style", "width:" + percentage + "%");
+                    },
+
+                    function error(err) {
+
+                    },
+
+                    function complete() {
+                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            var cat = {
+                                "i": downloadURL,
+                                "n": catname
+                            };
+
+                            database.set(cat, function (err) {
+                                if (err) {
+                                    $("#result-edit").attr("class", "alert alert-danger");
+                                    $("#result-edit").html(err.message);
+                                } else {
+                                    $("#result-edit").attr("class", "alert alert-success");
+                                    $("#result-edit").html("Category changes has been saved");
+                                }
+                                resetFormEdit();
+                            });
+                        });
+                    }
+
+                );
+            }
+
+
+
+        });
+
+    });
+
+    function resetFormEdit() {
+        $("#category-edit-form")[0].reset();
+        $("#selected-edit-thumbnail").fadeOut();
+        $("#upload-progress-edit").html("Completed");
+        document.getElementById("closeEdit").click(); 
+        $("#result-edit").fadeOut();
+
+      
+    }
+
+    var dbCategories = firebase.database().ref("categories");
+
+    dbCategories.on("value", function (categories) {
+
+        if (categories.exists()) {
+            var categorieshtml = "";
+            categories.forEach(function (category) {
+
+                categorieshtml += "<tr>";
+
+                //for category name
+                categorieshtml += "<td>";
+                categorieshtml += category.key;
+                categorieshtml += "</td>";
+
+                //for category description
+                categorieshtml += "<td>";
+                categorieshtml += category.val().t;
+                categorieshtml += "</td>";
+
+                //for category thumbnail
+                categorieshtml += "<td> <img width='250' height='150' src='";
+                categorieshtml += category.val().i;
+                categorieshtml += "' /></td>";
+
+                //for edit button
+                categorieshtml += "<td>";
+                categorieshtml += "<button type=\"button\" class=\"btn btn-primary btn-xs\" id=\"edit-button\"  data-toggle=\"modal\" data-target=\"#modalEditForm\">Edit</button>"
+                categorieshtml += "</td>";
+
+                //for delete button
+                categorieshtml += "<td>";
+                categorieshtml += "<button type=\"button\" class=\"getid btn btn-danger\" id=\"delete-button\">Delete</button>"
+                categorieshtml += "</td>";
+
+                categorieshtml += "</tr>";
+
+            });
+
+            $("#categories").html(categorieshtml);
+
+        }
+
+    });
+
+
+</script>
+
+<!--//Add category logic-->
+<script>
+
+    var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+    $("#selected-thumbnail").hide();
+
+    function previewThumbnail(thumbnail) {
+        if (thumbnail.files && thumbnail.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#selected-thumbnail").attr('src', e.target.result);
+                $("#selected-thumbnail").fadeIn();
+            }
+            reader.readAsDataURL(thumbnail.files[0]);
+        }
+    }
+
+    $("#category-thumbnail").change(function () {
+        previewThumbnail(this);
+    });
+
+    $("#save-category").click(function () {
+        $("#category-name").removeClass("is-invalid");
+        $("#category-thumbnail").removeClass("is-invalid");
+
+        var catname = $("#category-name").val();
+        var thumbnail = $("#category-thumbnail").prop("files")[0];
+
+
+        var numOfCategories = firebase.database().ref("categories");
+        numOfCategories.once("value").then(function (snapshot) {
+            // console.log(Number.parseInt(snapshot.numChildren() + 1));
+            var catKey = snapshot.numChildren() + 1;
+
+            if (!catname) {
+                $("#category-name").addClass("is-invalid");
+                return;
+            }
+
+
+            if (thumbnail == null) {
+                $("#category-thumbnail").addClass("is-invalid");
+                return;
+            }
+
+            if ($.inArray(thumbnail["type"], validImageTypes) < 0) {
+                $("#category-thumbnail").addClass("is-invalid");
+                return;
+            }
+
+
+
+            var database = firebase.database().ref("categories/" + Number.parseInt(snapshot.numChildren() + 1));
+            var count = Number.parseInt(snapshot.numChildren() + 1);
+            database.once("value").then(function (snapshot) {
+                if (snapshot.exists()) {
+                    ///////////////////////////////
+                    var counter = 1;
+                    var insertKey = 0;
+                    var database2 = firebase.database().ref("categories").orderByKey();
+                    database2.once("value").then(function (snapshot) {
+                        snapshot.forEach(function (childSnapshot) {
+                            var key = childSnapshot.key; // "ada"
+                            // console.log(count + "-" + snapshot.numChildren() + "--" + key);
+                            if (insertKey == 0 && key != counter) {
+                                insertKey = counter;
+                                // console.log("------->" + childSnapshot.child("n").val() + ".." + key+"-->"+counter);
+
+                                counter = -1;
+
+
+
+                                //1. upload the selected thumbnail to firebase storage
+                                var name = thumbnail["name"];
+                                var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                                var thumbname = new Date().getTime();
+
+                                var storageRef = firebase.storage().ref(catname + "/" + thumbname + ext);
+
+                                var uploadTask = storageRef.put(thumbnail);
+
+                                uploadTask.on("state_changed",
+
+                                    function progress(snapshot) {
+                                        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                        $("#upload-progress").html(Math.round(percentage) + "%");
+                                        $("#upload-progress").attr("style", "width:" + percentage + "%");
+                                    },
+
+                                    function error(err) {
+
+                                    },
+
+                                    function complete() {
+                                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                                            var cat = {
+                                                "i": downloadURL,
+                                                "n": catname
+                                            };
+                                            var database3 = firebase.database().ref("categories/" + insertKey);
+                                            // console.log(insertKey);
+                                            database3.set(cat, function (err) {
+                                                if (err) {
+                                                    $("#result").attr("class", "alert alert-danger");
+                                                    $("#result").html(err.message);
+                                                    resetForm();
+                                                    return false;
+                                                } else {
+                                                    $("#result").attr("class", "alert alert-success");
+                                                    $("#result").html("Category added");
+                                                    firebase.database().ref("data/" + insertKey+"/1").set("");
+                                                    resetForm();
+                                                    return false;
+
+                                                }
+                                            });
+                                        });
+                                    }
+
+                                );
+
+                            } else {
+                                counter++;
+                            }
+
+                        });
+
+
+                    });
+                } else {
+
+                    //1. upload the selected thumbnail to firebase storage
+                    var name = thumbnail["name"];
+                    var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                    var thumbname = new Date().getTime();
+
+                    var storageRef = firebase.storage().ref(catname + "/" + thumbname + ext);
+
+                    var uploadTask = storageRef.put(thumbnail);
+
+                    uploadTask.on("state_changed",
+
+                        function progress(snapshot) {
+                            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                            $("#upload-progress").html(Math.round(percentage) + "%");
+                            $("#upload-progress").attr("style", "width:" + percentage + "%");
+                        },
+
+                        function error(err) {
+
+                        },
+
+                        function complete() {
+                            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                                var cat = {
+                                    "i": downloadURL,
+                                    "n": catname
+                                };
+
+                                database.set(cat, function (err) {
+                                    if (err) {
+                                        $("#result").attr("class", "alert alert-danger");
+                                        $("#result").html(err.message);
+                                    } else {
+                                        $("#result").attr("class", "alert alert-success");
+                                        $("#result").html("Category added");
+                                        firebase.database().ref("data/" + count+"/1").set("");
+
+                                    }
+                                    resetForm();
+                                });
+                            });
+                        }
+
+                    );
+
+
+                }
+
+
+            });
+
+        });
+    });
+
+    function resetForm() {
+        $("#category-form")[0].reset();
+        $("#selected-thumbnail").fadeOut();
+        $("#upload-progress").html("Completed");
+        document.getElementById("close").click(); 
+
+    }
+
+    var dbCategories = firebase.database().ref("categories");
+
+    dbCategories.on("value", function (categories) {
+
+        if (categories.exists()) {
+            var categorieshtml = "";
+            categories.forEach(function (category) {
+
+                categorieshtml += "<tr>";
+
+                //for category name
+                categorieshtml += "<td>";
+                categorieshtml += category.key;
+                categorieshtml += "</td>";
+
+                //for category description
+                categorieshtml += "<td>";
+                categorieshtml += category.val().n;
+                categorieshtml += "</td>";
+
+                //for category thumbnail
+                categorieshtml += "<td> <img height='100' src='";
+                categorieshtml += category.val().i;
+                categorieshtml += "' /></td>";
+
+                //for edit button
+                categorieshtml += "<td>";
+                categorieshtml += "<button type=\"button\" class=\"btn btn-primary btn-xs\" id=\"edit-button\" data-toggle=\"modal\" data-target=\"#modalEditForm\">Edit</button>"
+                categorieshtml += "</td>";
+
+                //for delete button
+                categorieshtml += "<td>";
+                categorieshtml += "<button type=\"button\" class=\"getid btn btn-danger\" id=\"delete-button\">Delete</button>"
+                categorieshtml += "</td>";
+
+                categorieshtml += "</tr>";
+
+            });
+
+            $("#categories").html(categorieshtml);
+
+        }
+
+    });
+
+
+</script>

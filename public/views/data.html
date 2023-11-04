@@ -1,0 +1,1952 @@
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+        width: 100%;
+    }
+
+    .row {
+        width: 100%;
+        margin: 0px;
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+        align-content: center;
+
+    }
+
+    .table>tbody>tr>td {
+        width: 100%;
+        vertical-align: middle !important;
+        max-width: 100%;
+        text-align: center;
+        align-content: center;
+        margin: 0px;
+
+    }
+
+    table tr th:nth-child(3) {
+        width: 5%;
+    }
+
+    table tr th:nth-child(1) {
+        width: 10%;
+    }
+
+    table tr th:nth-child(2) {
+        width: 10%;
+    }
+
+    table tr th:nth-child(4) {
+        width: 25%;
+    }
+
+    table tr th:nth-child(5) {
+        width: 10%;
+    }
+
+    table tr th:nth-child(6) {
+        width: 10%;
+
+    }
+
+    table tr th:nth-child(7) {
+        width: 15%;
+    }
+
+    table tr th:nth-child(8) {
+        width: 5%;
+    }
+
+    table tr th:nth-child(9) {
+        width: 10%;
+    }
+
+    .modal-lg {
+        max-width: 80% !important;
+    }
+
+    .custom-select {
+        position: relative;
+    }
+</style>
+
+
+
+<div class="row" style="margin-top: 10px; align-items: center;">
+    <h3 style="color:#455a64; width: 40%; align-items: center;">Manage Levels and Questions</h3>
+
+    <div class="form-group" style="margin:10px; width: 15%; align-items: center;">
+        <label for="category_arr" style="font-size: small; color: #455a64; text-align: center;">Select
+            Category</label>
+        <select id="category_arr" class="form-control"></select>
+    </div>
+    <div class="form-group" style="margin:10px; width: 15%; align-items: center;">
+        <label for="levels_arr" style="font-size: small; color: #455a64;  text-align: center;">Select
+            Level</label>
+        <select id="levels_arr" class="form-control"></select>
+    </div>
+
+    <div>
+        <a href="" style="position: absolute; right: 0; margin-right: 75px;" class="btn btn-primary btn-rounded mb-4; width: 30%; align-items: center;"
+            data-toggle="modal" data-target="#modalAddForm"><span class="material-icons">add_circle</span>Add
+            Question</a>
+    </div>
+
+</div>
+</div>
+<!-- table-layout: fixed;  -->
+<table class="table table-striped" layout style="text-align: center; width: 100%; align-content: center; 
+word-wrap: break-word; table-layout: fixed">
+    <thead>
+        <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Level</th>
+            <th scope="col">#</th>
+            <th scope="col">Question</th>
+            <th scope="col">Image</th>
+            <th scope="col">Sound</th>
+            <th scope="col">Answer</th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+        </tr>
+    </thead>
+    <tbody id="categories" style="vertical-align: middle;">
+
+    </tbody>
+</table>
+<h6>© 2022 Leenah Albanna All Rights Reserved</h6>
+</div>
+
+
+<!--//For Adding the Question-->
+
+<div class="modal fade" id="modalAddForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="width: fit-content;">
+        <div class="modal-content">
+            <div class="modal-header text-center" style="background-color: #eceff1;">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #30b0f5; font-family:sans-serif;">Add
+                    Question</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <form id="recipe-form">
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label for="categories_arr"
+                                    style="font-size: small; color: #424242; width: 100%; text-align: start;">Select
+                                    Category</label>
+                                <select id="categories_arr" class="form-control"></select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="question-text"
+                                    style="font-size: small; color: #424242; width: 100%; text-align: start;">Question
+                                    Text</label>
+                                <input type="text" class="form-control" id="question-text" />
+
+                                <div class="invalid-feedback">
+                                    Please enter the text of the question.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="question-image"
+                                    style="font-size: small; color: #424242; width: 100%; text-align: start;">Question
+                                    Image</label>
+                                <input type="file" class="form-control" id="question-image" accept="image/*" />
+
+                                <button type="button" id="clear" style="font-size: small;">Clear</button>
+
+                                <div class="invalid-feedback">
+                                    Please choose a valid image.
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <img id="preview" width="250" height="150" src="#" />
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="chefs_arr"
+                                    style="font-size: small; color: #424242; width: 100%; text-align: start;">Select
+                                    Level</label>
+                                <select id="chefs_arr" class="form-control"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="question-answer"
+                                    style="font-size: small; color: #424242; width: 100%; text-align: start;">Answer</label>
+                                <!-- <textarea class="form-control" id="question-answer"></textarea> -->
+                                <input type="text" class="form-control" id="question-answer" />
+
+                                <div class="invalid-feedback">
+                                    Please enter the Answer.
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="question-sound"
+                                    style="font-size: small; color: #424242; width: 100%; text-align: start;">Question
+                                    Sound</label>
+                                <input type="file" class="form-control" id="question-sound" accept="audio/*" />
+
+                                <button type="button" id="clearSound" style="font-size: small;">Clear</button>
+
+                                <div class="invalid-feedback">
+                                    Please choose a valid Sound file.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group" style="width: 100%;">
+                        <div class="progress">
+                            <div class="progress-bar" id="upload-progress" style="width:0%">0%</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+
+                        <button id="save-data" type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+                <div id="result">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!--//For deleting the question by key-->
+<script>
+
+    $(document).on('click', '#delete-button', function (event) {
+        var rowindex = $(this).parents("tr").index();
+        var table = document.getElementById('categories');
+        //var category
+        var dbCategories = firebase.database().ref("categories");
+        dbCategories.on("value", function (categories) {
+            categories.forEach(function (category) {
+                var categoryTitle = category.val().n;
+                var clickedCategoryName = table.rows[rowindex].cells[0].innerHTML;
+
+                if (categoryTitle == clickedCategoryName) {
+                    var database = firebase.database().ref("data").child(category.key).child(table.rows[rowindex].cells[1].innerHTML);
+                    database.child(table.rows[rowindex].cells[2].innerHTML).remove().complete(
+                        viewFilteredData()
+                    );
+                }
+
+            });
+
+
+        });
+    });
+
+
+
+</script>
+
+<!--For editing the question by key-->
+<!---->
+<div class="modal fade" id="modalEditForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center" style="background-color: #eceff1;">
+                <h4 class="modal-title w-100 font-weight-bold" style="color: #30b0f5; font-family:sans-serif;">Edit
+                    Question</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeEdit">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <form id="recipe-edit-form">
+
+                    <div class="form-group">
+                        <label for="recipe-edit-name"
+                            style="font-size: small; color: #424242; width: 100%; text-align: start;">Update question
+                            text</label>
+                        <input type="text" class="form-control" id="recipe-edit-name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="question-edit-answer"
+                            style="font-size: small; color: #424242; width: 100%; text-align: start;">Update question
+                            answer</label>
+                        <input type="text" class="form-control" id="question-edit-answer" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="question-edit-image"
+                            style="font-size: small; color: #424242; width: 100%; text-align: start;">Update question
+                            Image</label>
+                        <input type="file" class="form-control" id="question-edit-image" accept="image/*" />
+
+                        <button type="button" id="clearEdit" style="font-size: small;">Clear</button>
+
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <img id="selected-edit-thumbnail" width="250" height="150" src="#" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="question-edit-sound"
+                            style="font-size: small; color: #424242; width: 100%; text-align: start;">Update question
+                            Sound</label>
+                        <input type="file" class="form-control" id="question-edit-sound" accept="audio/*" />
+
+                        <button type="button" id="clearSoundEdit" style="font-size: small;">Clear</button>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="progress">
+                            <div class="progress-bar" id="upload-progress-edit" style="width:0%">0%</div>
+                        </div>
+                    </div>
+                    <div class="from-group">
+                        <div class="modal-footer d-flex justify-content-center">
+
+                            <button id="save-edit-recipe" type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                </form>
+                <div id="result-edit">
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<!---->
+<script>
+    var rowindex;
+    $(document).on('click', '#edit-button', function () {
+        rowindex = $(this).parents("tr").index();
+        // alert(rowindex);
+        //set the current recipe name
+        var questionText = document.getElementById("categories").rows[$(this).parents("tr").index()].cells[3].innerHTML;
+        var answerText = document.getElementById("categories").rows[$(this).parents("tr").index()].cells[6].innerHTML;
+
+        if (questionText != "-") {
+            $("#recipe-edit-name").val(questionText)
+        }
+        $("#question-edit-answer").val(answerText);
+
+        $("#upload-progress-edit").empty();
+        $("#result-edit").empty();
+        $("#selected-edit-thumbnail").hide();
+
+    });
+
+    //Edit recipe logic
+
+
+    //Selecting an image
+    $("#selected-edit-thumbnail").hide();
+    function previewThumbnailEdit(thumbnail) {
+        if (thumbnail.files && thumbnail.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#selected-edit-thumbnail").attr('src', e.target.result);
+                $("#selected-edit-thumbnail").fadeIn();
+            }
+            reader.readAsDataURL(thumbnail.files[0]);
+        }
+    }
+
+
+    $("#question-edit-image").change(function () {
+        previewThumbnailEdit(this);
+    });
+
+    //Clear selected images
+    $('#clearEdit').click(function () {
+        $("#selected-edit-thumbnail").html("");//remove images
+        $("#selected-edit-thumbnail").val(""); //remove images descriptions
+        $("#question-edit-image").val("");
+        $("#selected-edit-thumbnail").fadeOut();
+        $("#selected-edit-thumbnail").hide();
+    });
+
+    //View selected Sound file
+    $("#question-edit-sound").change(function () {
+        previewSoundEdit(this);
+    });
+    //Clear selected sound
+    $('#clearSoundEdit').click(function () {
+
+        $("#question-edit-sound").val("");
+    });
+    //Selecting an sound
+    function previewSoundEdit(sound) {
+        if (sound.files && sound.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+            }
+            reader.readAsDataURL(sound.files[0]);
+        }
+    }
+
+    $("#save-edit-recipe").click(function () {
+        $("#recipe-edit-name").removeClass("is-invalid");
+        $("#question-edit-image").removeClass("is-invalid");
+
+        // get the id of category, level and question
+        /////\\\\
+        var table = document.getElementById('categories');
+        // alert(rowindex);
+        //var category
+        var dbCategories = firebase.database().ref("categories");
+        dbCategories.on("value", function (categories) {
+            categories.forEach(function (category) {
+                var categoryTitle = category.val().n;
+                var clickedCategoryName = table.rows[rowindex].cells[0].innerHTML;
+
+                if (categoryTitle == clickedCategoryName) {
+                    var clickedCategoryId = category.key;
+                    var clickedLevelId = table.rows[rowindex].cells[1].innerHTML;
+                    var clickedQuestionId = table.rows[rowindex].cells[2].innerHTML;
+
+
+                    var database = firebase.database().ref("data").child(category.key).child(clickedLevelId).child(clickedQuestionId);
+
+                    var questionText = $("#recipe-edit-name").val();
+                    var thumbnail = $("#question-edit-image").prop("files")[0];
+                    var sound = $("#question-edit-sound").prop("files")[0];
+                    var answer = $("#question-edit-answer").val();
+
+
+                    var cat;// the value of any field
+                    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$//
+                    for (var i = 0; i < 4; i++) {
+
+                        if (i == 0) {// update question text if available
+                            if (questionText != null) {
+                                cat = questionText;
+                                database.child("q").set(cat, function (err) {
+                                    if (err) {
+                                        $("#result-edit").attr("class", "alert alert-danger");
+                                        $("#result-edit").html(err.message);
+                                        resetFormEdit();
+                                        return false;
+                                    } else {
+                                        $("#result-edit").attr("class", "alert alert-success");
+                                        $("#result-edit").html("Question updated");
+                                        resetFormEdit();
+                                        return false;
+
+                                    }
+                                });
+
+                            }
+                        } else if (i == 1) {// update question image if available
+                            if (thumbnail != null) {
+                                var uploadTask = "";
+
+                                var name = $("#question-edit-image").prop("files")[0]["name"];
+
+                                var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                                var thumbname = new Date().getTime();
+
+                                var storageRef = firebase.storage().ref(category.key + "/" + thumbname + ext);
+                                var uploadTask = storageRef.put(thumbnail);
+
+                                uploadTask.on("state_changed",
+
+                                    function progress(snapshot) {
+                                        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                        $("#upload-progress-edit").html(Math.round(percentage) + "%");
+                                        $("#upload-progress-edit").attr("style", "width:" + percentage + "%");
+                                    },
+
+                                    function error(err) {
+
+                                    },
+
+                                    function complete() {
+                                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                            firebase.storage().ref().child(category.key + "/" + thumbname + ext).getDownloadURL().then(function (downloadURL) {
+                                                cat = downloadURL;
+                                                database.child("i").set(cat, function (err) {
+                                                    if (err) {
+                                                        $("#result-edit").attr("class", "alert alert-danger");
+                                                        $("#result-edit").html(err.message);
+                                                        resetFormEdit();
+                                                        return false;
+                                                    } else {
+                                                        $("#result-edit").attr("class", "alert alert-success");
+                                                        $("#result-edit").html("Question updated");
+                                                        resetFormEdit();
+                                                        return false;
+
+                                                    }
+                                                });
+
+                                            });
+
+                                        });
+                                    }
+
+                                );
+                            }
+                            //---------------------//
+                        } else if (i == 2) {// update question sound if available
+                            if (sound != null) {
+                                var uploadTask = "";
+
+                                var name = $("#question-edit-sound").prop("files")[0]["name"];
+
+                                var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                                var thumbname = new Date().getTime();
+
+                                var storageRef = firebase.storage().ref(category.key + "/" + thumbname + ext);
+                                var uploadTask = storageRef.put(sound);
+
+                                uploadTask.on("state_changed",
+
+                                    function progress(snapshot) {
+                                        var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                        $("#upload-progress-edit").html(Math.round(percentage) + "%");
+                                        $("#upload-progress-edit").attr("style", "width:" + percentage + "%");
+                                    },
+
+                                    function error(err) {
+
+                                    },
+
+                                    function complete() {
+                                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                            firebase.storage().ref().child(category.key + "/" + thumbname + ext).getDownloadURL().then(function (downloadURL) {
+                                                cat = downloadURL;
+                                                database.child("s").set(cat, function (err) {
+                                                    if (err) {
+                                                        $("#result-edit").attr("class", "alert alert-danger");
+                                                        $("#result-edit").html(err.message);
+                                                        resetFormEdit();
+                                                        return false;
+                                                    } else {
+                                                        $("#result-edit").attr("class", "alert alert-success");
+                                                        $("#result-edit").html("Question updated");
+                                                        resetFormEdit();
+                                                        return false;
+
+                                                    }
+                                                });
+
+                                            });
+
+                                        });
+                                    }
+
+                                );
+
+                            }
+
+                        } else if (i == 3) {// update question answer if available
+                            if (answer != null) {
+                                cat = answer;
+                                database.child("a").set(cat, function (err) {
+                                    if (err) {
+                                        $("#result-edit").attr("class", "alert alert-danger");
+                                        $("#result-edit").html(err.message);
+                                        resetFormEdit();
+                                        return false;
+                                    } else {
+                                        $("#result-edit").attr("class", "alert alert-success");
+                                        $("#result-edit").html("Question updated");
+                                        resetFormEdit();
+                                        return false;
+
+                                    }
+                                });
+
+                            }
+
+                        }
+
+                    }
+
+                    //$$$$$$$$$$$$$$$$$$$$$$$$$$$$//
+
+
+
+                }
+
+            });
+
+
+        });
+        /////\\\\
+
+
+
+    });
+    function resetFormEdit() {
+        $("#recipe-edit-form")[0].reset();
+        $("#selected-edit-thumbnail").fadeOut();
+        $("#upload-progress-edit").html("Completed");
+        $("#result-edit").fadeOut();
+        document.getElementById("closeEdit").click();
+        viewFilteredData()
+
+    }
+
+
+
+
+
+</script>
+
+<!--//Add Question logic-->
+<script>
+    var selectedOptionCategroy = 1;
+    var selectedOptionLevel = 1;
+
+    $("#preview").hide();
+    //Select category
+    var select = document.getElementById("categories_arr");
+    var dbCategories = firebase.database().ref("categories");
+    dbCategories.on("value", function (categories) {
+        categories.forEach(function (category) {
+            var optn = category.val().n;
+            var el = document.createElement("option");
+            el.textContent = optn;
+            el.value = optn;
+            select.appendChild(el);
+
+        });
+
+        //Select level
+        // defualt category
+        var selectedCategory = document.getElementById("categories_arr").selectedIndex + 1;
+        var selectChef = document.getElementById("chefs_arr");
+
+        var dbChefs = firebase.database().ref("data").child(selectedCategory);
+        dbChefs.on("value", function (chefs) {
+            chefs.forEach(function (chef) {
+                var optn = chef.key;
+                var el = document.createElement("option");
+                el.textContent = optn;
+                el.value = optn;
+                selectChef.appendChild(el);
+                //add additional level
+                if (chef.key == chefs.numChildren()) {
+                    var optn = chefs.numChildren() + 1;
+                    var el = document.createElement("option");
+                    el.textContent = optn;
+                    el.value = optn;
+                    selectChef.appendChild(el);
+                }
+
+            });
+
+
+        });
+
+    });
+
+    //Select level
+    //according to the selected category
+    var selectedCategory = document.getElementById("categories_arr").selectedIndex + 1;
+    var selectChef = document.getElementById("chefs_arr");
+    document.getElementById("categories_arr").onchange = function () {
+        //remove old list
+        removeOptions(document.getElementById('chefs_arr'));
+
+        selectedCategory = this.selectedIndex + 1;
+        var dbChefs = firebase.database().ref("data").child(selectedCategory);
+        dbChefs.on("value", function (chefs) {
+            chefs.forEach(function (chef) {
+                var optn = chef.key;
+                var el = document.createElement("option");
+                el.textContent = optn;
+                el.value = optn;
+                selectChef.appendChild(el);
+                //add additional level
+                if (chef.key == chefs.numChildren()) {
+                    var optn = chefs.numChildren() + 1;
+                    var el = document.createElement("option");
+                    el.textContent = optn;
+                    el.value = optn;
+                    selectChef.appendChild(el);
+                }
+
+            });
+
+
+        });
+    }
+    function removeOptions(selectElement) {
+        var i, L = selectElement.options.length - 1;
+        for (i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+    }
+
+    //Text editor
+
+
+    //Selecting an image
+    function previewThumbnail(thumbnail) {
+        if (thumbnail.files && thumbnail.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#preview").attr('src', e.target.result);
+                $("#preview").fadeIn();
+            }
+            reader.readAsDataURL(thumbnail.files[0]);
+        }
+    }
+    //View selected images
+    $("#question-image").change(function () {
+        previewThumbnail(this);
+    });
+    //Clear selected images
+    $('#clear').click(function () {
+
+        $("#preview").html("");//remove images
+        $("#preview").val(""); //remove images descriptions
+        $("#question-image").val("");
+        $("#preview").fadeOut();
+        $("#preview").hide();
+    });
+
+    //View selected Sound file
+    $("#question-sound").change(function () {
+        previewSound(this);
+    });
+    //Clear selected sound
+    $('#clearSound').click(function () {
+
+        $("#question-sound").val("");
+    });
+    //Selecting an sound
+    function previewSound(sound) {
+        if (sound.files && sound.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+            }
+            reader.readAsDataURL(sound.files[0]);
+        }
+    }
+
+
+    //Upload to the database after clicking on save button
+    $("#save-data").click(function () {
+        $("#question-text").removeClass("is-invalid");
+        $("#question-image").removeClass("is-invalid");
+        $("#question-sound").removeClass("is-invalid");
+        $("#question-answer").removeClass("is-invalid");
+
+        var questionText = $("#question-text").val();
+        var level = document.getElementById("chefs_arr").selectedIndex + 1;
+        var category = document.getElementById("categories_arr").selectedIndex + 1;
+        var thumbnail = $("#question-image").prop("files")[0];
+        var sound = $("#question-sound").prop("files")[0];
+        var answer = $("#question-answer").val();
+
+
+        var numOfQuestion = firebase.database().ref("data").child(category).child(level);
+        numOfQuestion.once("value").then(function (snapshot) {
+            var catKey = snapshot.numChildren() + 1;
+            //check if question contain at least text or image or sound
+            if (!questionText && thumbnail == null && sound == null) {
+                alert('Please make sure to insert at least a text or image or sound');
+                return;
+            }
+
+            //check if the answer is inserted
+            if (!answer) {
+                $("#question-answer").addClass("is-invalid");
+                return;
+            }
+
+
+
+
+
+            var uploadedImagePath = [];
+
+            var i = 0;
+
+            var database = firebase.database().ref("data/" + category + "/" + level + "/" + Number.parseInt(snapshot.numChildren() + 1));
+            var count = Number.parseInt(snapshot.numChildren() + 1);
+            database.once("value").then(function (snapshot) {
+                if (snapshot.exists()) {
+
+                    ////////////if there is a missed ID///////////////////
+                    var counter = 1;
+                    var insertKey = 0;
+                    var database2 = firebase.database().ref("data/" + category + "/" + level).orderByKey();
+                    database2.once("value").then(function (snapshot) {
+                        snapshot.forEach(function (childSnapshot) {
+
+                            var key = childSnapshot.key; // "ada"
+                            if (insertKey == 0 && key != counter) {
+
+                                insertKey = counter;
+                                counter = -1;
+
+
+                                //\\
+                                //if text only
+                                if (thumbnail == null && sound == null) {
+                                    var cat = {
+                                        "q": questionText,
+                                        "a": answer
+                                    };
+
+                                    var database3 = firebase.database().ref("data").child(category).child(level).child(insertKey);
+                                    // console.log(insertKey);
+                                    database3.set(cat, function (err) {
+                                        if (err) {
+                                            $("#result").attr("class", "alert alert-danger");
+                                            $("#result").html(err.message);
+                                            resetForm();
+                                            return false;
+                                        } else {
+                                            $("#result").attr("class", "alert alert-success");
+                                            $("#result").html("Question added");
+                                            resetForm();
+                                            return false;
+
+                                        }
+                                    });
+                                }
+                                // if question is text & image only
+                                else if (questionText != null && sound == null && thumbnail != null) {
+
+                                    //---------------------//
+
+                                    var uploadTask = "";
+
+                                    var name = $("#question-image").prop("files")[0]["name"];
+
+                                    var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                                    var thumbname = new Date().getTime();
+
+                                    var storageRef = firebase.storage().ref(category + "/" + thumbname + ext);
+                                    var uploadTask = storageRef.put(thumbnail);
+
+                                    uploadTask.on("state_changed",
+
+                                        function progress(snapshot) {
+                                            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                            $("#upload-progress").html(Math.round(percentage) + "%");
+                                            $("#upload-progress").attr("style", "width:" + percentage + "%");
+                                        },
+
+                                        function error(err) {
+
+                                        },
+
+                                        function complete() {
+                                            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                                firebase.storage().ref().child(category + "/" + thumbname + ext).getDownloadURL().then(function (downloadURL) {
+
+
+                                                    // if question is image only
+
+                                                    var cat;
+                                                    if (!questionText) {
+                                                        cat = {
+                                                            "i": downloadURL,
+                                                            "a": answer
+                                                        };
+                                                    } else {
+                                                        // if question is text & image only
+
+                                                        cat = {
+                                                            "i": downloadURL,
+                                                            "q": questionText,
+                                                            "a": answer
+                                                        };
+                                                    }
+
+                                                    var database3 = firebase.database().ref("data").child(category).child(level).child(insertKey);
+                                                    // console.log(insertKey);
+                                                    database3.set(cat, function (err) {
+                                                        if (err) {
+                                                            $("#result").attr("class", "alert alert-danger");
+                                                            $("#result").html(err.message);
+                                                            resetForm();
+                                                            return false;
+                                                        } else {
+                                                            $("#result").attr("class", "alert alert-success");
+                                                            $("#result").html("Question added");
+                                                            resetForm();
+                                                            return false;
+
+                                                        }
+                                                    });
+
+                                                });
+
+                                            });
+                                        }
+
+                                    );
+                                    //---------------------//
+
+                                }
+
+                                // if question is text & sound only
+                                else if (questionText != null && sound != null && thumbnail == null) {
+
+                                    //---------------------//
+
+                                    var uploadTask = "";
+
+                                    var name = $("#question-sound").prop("files")[0]["name"];
+
+                                    var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                                    var thumbname = new Date().getTime();
+
+                                    var storageRef = firebase.storage().ref(category + "/" + thumbname + ext);
+                                    var uploadTask = storageRef.put(sound);
+
+                                    uploadTask.on("state_changed",
+
+                                        function progress(snapshot) {
+                                            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                            $("#upload-progress").html(Math.round(percentage) + "%");
+                                            $("#upload-progress").attr("style", "width:" + percentage + "%");
+                                        },
+
+                                        function error(err) {
+
+                                        },
+
+                                        function complete() {
+                                            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                                firebase.storage().ref().child(category + "/" + thumbname + ext).getDownloadURL().then(function (downloadURL) {
+
+                                                    // if question is sound only
+
+                                                    var cat;
+                                                    if (!questionText) {
+                                                        cat = {
+                                                            "s": downloadURL,
+                                                            "a": answer
+                                                        };
+                                                    } else {
+                                                        // if question is text & sound only
+
+                                                        cat = {
+                                                            "s": downloadURL,
+                                                            "q": questionText,
+                                                            "a": answer
+                                                        };
+                                                    }
+
+                                                    var database3 = firebase.database().ref("data").child(category).child(level).child(insertKey);
+                                                    // console.log(insertKey);
+                                                    database3.set(cat, function (err) {
+                                                        if (err) {
+                                                            $("#result").attr("class", "alert alert-danger");
+                                                            $("#result").html(err.message);
+                                                            resetForm();
+                                                            return false;
+                                                        } else {
+                                                            $("#result").attr("class", "alert alert-success");
+                                                            $("#result").html("Question added");
+                                                            resetForm();
+                                                            return false;
+
+                                                        }
+                                                    });
+
+                                                });
+
+                                            });
+                                        }
+
+                                    );
+                                    //---------------------//
+
+                                }
+                                // if the question includes image and sound and/or text
+
+                                else {
+
+                                    var uploadedImageSound = [];
+
+                                    for (i = 0; i < 2; i++) {
+                                        var name = "";
+                                        var uploadTask = "";
+                                        if (i == 0) {
+                                            name = $("#question-image").prop("files")[0]["name"];
+                                        } else if (i == 1) {
+                                            name = $("#question-sound").prop("files")[0]["name"];
+
+
+                                        }
+                                        var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                                        var thumbname = new Date().getTime();
+
+                                        var storageRef = firebase.storage().ref(category + "/" + thumbname + ext);
+                                        if (i == 0) {
+                                            uploadTask = storageRef.put(thumbnail);
+                                        } else if (i == 1) {
+                                            uploadTask = storageRef.put(sound);
+                                        }
+                                        // var uploadTask = storageRef.put(thumbnail);
+                                        uploadedImagePath.push(thumbname + ext);
+
+                                        uploadTask.on("state_changed",
+
+                                            function progress(snapshot) {
+                                                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                                $("#upload-progress").html(Math.round(percentage) + "%");
+                                                $("#upload-progress").attr("style", "width:" + percentage + "%");
+                                            },
+
+                                            function error(err) {
+
+                                            },
+
+                                            function complete() {
+                                                uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                                    for (var j = 0; j < uploadedImagePath.length; j++) {
+                                                        firebase.storage().ref().child(category + "/" + uploadedImagePath[j]).getDownloadURL().then(function (downloadURL) {
+
+                                                            uploadedImageSound.push(downloadURL)
+
+                                                            if (i == 2) {
+                                                                var cat;
+                                                                // if question is sound & image only without text
+                                                                if (!questionText && sound != null && thumbnail != null) {
+                                                                    cat = {
+                                                                        "i": uploadedImageSound[0],
+                                                                        "s": uploadedImageSound[1],
+                                                                        "a": answer
+                                                                    };
+                                                                }
+
+                                                                else {
+                                                                    // if question is text & sound & image
+                                                                    cat = {
+                                                                        "i": uploadedImageSound[0],
+                                                                        "q": questionText,
+                                                                        "s": uploadedImageSound[1],
+                                                                        "a": answer
+                                                                    };
+                                                                }
+                                                                var database3 = firebase.database().ref("data").child(category).child(level).child(insertKey);
+                                                                // console.log(insertKey);
+                                                                database3.set(cat, function (err) {
+                                                                    if (err) {
+                                                                        $("#result").attr("class", "alert alert-danger");
+                                                                        $("#result").html(err.message);
+                                                                        resetForm();
+                                                                        return false;
+                                                                    } else {
+                                                                        $("#result").attr("class", "alert alert-success");
+                                                                        $("#result").html("Question added");
+                                                                        resetForm();
+                                                                        return false;
+
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+
+                                        );
+                                    }
+
+                                }
+
+                                //\\
+
+                            } else {
+                                counter++;
+                            }
+
+                        });
+
+
+                    });
+                } else {
+
+                    // Add the question with next id 
+                    //\\
+                    //if text only
+                    if (thumbnail == null && sound == null) {
+                        var cat = {
+                            "q": questionText,
+                            "a": answer
+                        };
+
+
+                        database.set(cat, function (err) {
+                            if (err) {
+                                $("#result").attr("class", "alert alert-danger");
+                                $("#result").html(err.message);
+                                resetForm();
+                                return false;
+                            } else {
+                                $("#result").attr("class", "alert alert-success");
+                                $("#result").html("Question added");
+                                resetForm();
+                                return false;
+
+                            }
+                        });
+                    }
+                    // if question is text & image only
+                    else if (questionText != null && sound == null && thumbnail != null) {
+
+                        //---------------------//
+
+                        var uploadTask = "";
+
+                        var name = $("#question-image").prop("files")[0]["name"];
+
+                        var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                        var thumbname = new Date().getTime();
+
+                        var storageRef = firebase.storage().ref(category + "/" + thumbname + ext);
+                        var uploadTask = storageRef.put(thumbnail);
+
+                        uploadTask.on("state_changed",
+
+                            function progress(snapshot) {
+                                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                $("#upload-progress").html(Math.round(percentage) + "%");
+                                $("#upload-progress").attr("style", "width:" + percentage + "%");
+                            },
+
+                            function error(err) {
+
+                            },
+
+                            function complete() {
+                                uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                    firebase.storage().ref().child(category + "/" + thumbname + ext).getDownloadURL().then(function (downloadURL) {
+
+                                        // if question is image only
+
+                                        var cat;
+                                        if (!questionText) {
+                                            cat = {
+                                                "i": downloadURL,
+                                                "a": answer
+                                            };
+                                        } else {
+                                            // if question is text & image only
+
+                                            cat = {
+                                                "i": downloadURL,
+                                                "q": questionText,
+                                                "a": answer
+                                            };
+                                        }
+                                        // console.log(insertKey);
+                                        database.set(cat, function (err) {
+                                            if (err) {
+                                                $("#result").attr("class", "alert alert-danger");
+                                                $("#result").html(err.message);
+                                                resetForm();
+                                                return false;
+                                            } else {
+                                                $("#result").attr("class", "alert alert-success");
+                                                $("#result").html("Question added");
+                                                resetForm();
+                                                return false;
+
+                                            }
+                                        });
+
+                                    });
+
+                                });
+                            }
+
+                        );
+                        //---------------------//
+
+                    }
+
+                    // if question is text & sound only
+                    else if (questionText != null && sound != null && thumbnail == null) {
+
+                        //---------------------//
+
+                        var uploadTask = "";
+
+                        var name = $("#question-sound").prop("files")[0]["name"];
+
+                        var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                        var thumbname = new Date().getTime();
+
+                        var storageRef = firebase.storage().ref(category + "/" + thumbname + ext);
+                        var uploadTask = storageRef.put(sound);
+
+                        uploadTask.on("state_changed",
+
+                            function progress(snapshot) {
+                                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                $("#upload-progress").html(Math.round(percentage) + "%");
+                                $("#upload-progress").attr("style", "width:" + percentage + "%");
+                            },
+
+                            function error(err) {
+
+                            },
+
+                            function complete() {
+                                uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                    firebase.storage().ref().child(category + "/" + thumbname + ext).getDownloadURL().then(function (downloadURL) {
+
+                                        // if question is sound only
+                                        var cat;
+                                        if (!questionText) {
+                                            cat = {
+                                                "s": downloadURL,
+                                                "a": answer
+                                            };
+                                        } else {
+                                            // if question is text & sound only
+
+                                            cat = {
+                                                "s": downloadURL,
+                                                "q": questionText,
+                                                "a": answer
+                                            };
+                                        }
+
+                                        // console.log(insertKey);
+                                        database.set(cat, function (err) {
+                                            if (err) {
+                                                $("#result").attr("class", "alert alert-danger");
+                                                $("#result").html(err.message);
+                                                resetForm();
+                                                return false;
+                                            } else {
+                                                $("#result").attr("class", "alert alert-success");
+                                                $("#result").html("Question added");
+                                                resetForm();
+                                                return false;
+
+                                            }
+                                        });
+
+                                    });
+
+                                });
+                            }
+
+                        );
+                        //---------------------//
+
+                    }
+                    // if the question includes image and sound and/or text
+
+                    else {
+
+                        var uploadedImageSound = [];
+
+                        for (i = 0; i < 2; i++) {
+                            var name = "";
+                            var uploadTask = "";
+                            if (i == 0) {
+                                name = $("#question-image").prop("files")[0]["name"];
+                            } else if (i == 1) {
+                                name = $("#question-sound").prop("files")[0]["name"];
+
+
+                            }
+                            var ext = name.substring(name.lastIndexOf("."), name.length);
+
+                            var thumbname = new Date().getTime();
+
+                            var storageRef = firebase.storage().ref(category + "/" + thumbname + ext);
+                            if (i == 0) {
+                                uploadTask = storageRef.put(thumbnail);
+                            } else if (i == 1) {
+                                uploadTask = storageRef.put(sound);
+                            }
+                            // var uploadTask = storageRef.put(thumbnail);
+                            uploadedImagePath.push(thumbname + ext);
+
+                            uploadTask.on("state_changed",
+
+                                function progress(snapshot) {
+                                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                                    $("#upload-progress").html(Math.round(percentage) + "%");
+                                    $("#upload-progress").attr("style", "width:" + percentage + "%");
+                                },
+
+                                function error(err) {
+
+                                },
+
+                                function complete() {
+                                    uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+
+                                        for (var j = 0; j < uploadedImagePath.length; j++) {
+                                            firebase.storage().ref().child(category + "/" + uploadedImagePath[j]).getDownloadURL().then(function (downloadURL) {
+
+                                                uploadedImageSound.push(downloadURL)
+
+                                                if (i == 2) {
+                                                    var cat;
+                                                    // if question is sound & image only without text
+                                                    if (!questionText && sound != null && thumbnail != null) {
+                                                        cat = {
+                                                            "i": uploadedImageSound[0],
+                                                            "s": uploadedImageSound[1],
+                                                            "a": answer
+                                                        };
+                                                    }
+
+                                                    else {
+                                                        // if question is text & sound & image
+                                                        cat = {
+                                                            "i": uploadedImageSound[0],
+                                                            "q": questionText,
+                                                            "s": uploadedImageSound[1],
+                                                            "a": answer
+                                                        };
+                                                    }
+                                                    // console.log(insertKey);
+                                                    database.set(cat, function (err) {
+                                                        if (err) {
+                                                            $("#result").attr("class", "alert alert-danger");
+                                                            $("#result").html(err.message);
+                                                            resetForm();
+                                                            return false;
+                                                        } else {
+                                                            $("#result").attr("class", "alert alert-success");
+                                                            $("#result").html("Question added");
+                                                            resetForm();
+                                                            return false;
+
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+
+                            );
+                        }
+
+                    }
+
+                    //\\
+
+                }
+            });
+
+        });
+    }
+
+    );
+    // Reset after changes
+    function resetForm() {
+        $("#recipe-form")[0].reset();
+        $("#preview").fadeOut();
+        $("#upload-progress").html("Completed");
+        document.getElementById("close").click();
+       
+        viewFilteredData()
+removeOptions(document.getElementById("categories_arr"));
+removeOptions(document.getElementById("chefs_arr"));
+
+//Select category
+    var select = document.getElementById("categories_arr");
+    var dbCategories = firebase.database().ref("categories");
+    dbCategories.on("value", function (categories) {
+        categories.forEach(function (category) {
+            var optn = category.val().n;
+            var el = document.createElement("option");
+            el.textContent = optn;
+            el.value = optn;
+            select.appendChild(el);
+
+        });
+
+        //Select level
+        // defualt category
+        var selectedCategory = document.getElementById("categories_arr").selectedIndex + 1;
+        var selectChef = document.getElementById("chefs_arr");
+
+        var dbChefs = firebase.database().ref("data").child(selectedCategory);
+        dbChefs.on("value", function (chefs) {
+            chefs.forEach(function (chef) {
+                var optn = chef.key;
+                var el = document.createElement("option");
+                el.textContent = optn;
+                el.value = optn;
+                selectChef.appendChild(el);
+                //add additional level
+                if (chef.key == chefs.numChildren()) {
+                    var optn = chefs.numChildren() + 1;
+                    var el = document.createElement("option");
+                    el.textContent = optn;
+                    el.value = optn;
+                    selectChef.appendChild(el);
+                }
+
+            });
+
+
+        });
+
+    });
+    
+}
+
+    viewData();
+    // Showing the Recipes data
+    function viewData() {
+        //=============Select category dropdown list==========//
+        var select = document.getElementById("category_arr");
+        removeOptions(select);
+
+        var dbCategories = firebase.database().ref("categories");
+        dbCategories.on("value", function (categories) {
+            categories.forEach(function (category) {
+                var optn = category.val().n;
+                var el = document.createElement("option");
+                el.textContent = optn;
+                el.value = optn;
+                select.appendChild(el);
+
+            });
+            //////==========//////
+            var selectedCategory = document.getElementById("category_arr").selectedIndex + 1;
+            var selectChef = document.getElementById("levels_arr");
+            removeOptions(selectChef);
+
+            var dbChefs = firebase.database().ref("data").child(selectedCategory);
+            dbChefs.on("value", function (chefs) {
+                chefs.forEach(function (chef) {
+                    var optn = chef.key;
+                    var el = document.createElement("option");
+                    el.textContent = optn;
+                    el.value = optn;
+                    selectChef.appendChild(el);
+                    //add additional level
+                    if (chef.key == chefs.numChildren()) {
+                        var optn = chefs.numChildren() + 1;
+                        var el = document.createElement("option");
+                        el.textContent = "All";
+                        el.value = "All";
+                        selectChef.appendChild(el);
+                        //add additional category
+                        var el = document.createElement("option");
+                        el.textContent = "All";
+                        el.value = "All";
+                        select.appendChild(el);
+                        viewFilteredData();
+
+                    }
+
+                });
+
+
+
+            });
+
+            /////===========//////
+
+
+            ///============///
+            var selectedCategory = document.getElementById("category_arr").selectedIndex + 1;
+            var selectChef = document.getElementById("levels_arr");
+            document.getElementById("category_arr").onchange = function () {
+                //remove old list
+                removeOptions(selectChef);
+                if (document.getElementById("category_arr").value == "All") {
+                    selectedOptionCategroy = 0;
+
+                    var el = document.createElement("option");
+                    el.textContent = "All";
+                    el.value = "All";
+                    selectChef.appendChild(el);
+                } else {
+                    selectedOptionCategroy = this.selectedIndex + 1;
+                    selectedOptionLevel = 1;
+                    selectedCategory = this.selectedIndex + 1;
+                    var dbChefs = firebase.database().ref("data").child(selectedCategory);
+                    dbChefs.on("value", function (chefs) {
+                        chefs.forEach(function (chef) {
+                            var optn = chef.key;
+                            var el = document.createElement("option");
+                            el.textContent = optn;
+                            el.value = optn;
+                            selectChef.appendChild(el);
+                            //add additional level
+                            if (chef.key == chefs.numChildren()) {
+                                var optn = chefs.numChildren() + 1;
+                                var el = document.createElement("option");
+                                el.textContent = "All";
+                                el.value = "All";
+                                selectChef.appendChild(el);
+                            }
+
+                        });
+
+
+                    });
+
+                }
+                viewFilteredData();
+
+            }
+            ///============///
+
+            ///============///
+            var selectChef = document.getElementById("levels_arr");
+            document.getElementById("levels_arr").onchange = function () {
+               
+                if (document.getElementById("levels_arr").value == "All") {
+                     //remove old list
+                    selectedOptionLevel= 0;
+                  
+                } else {
+                    selectedOptionLevel = this.selectedIndex + 1;
+
+                }
+                viewFilteredData();
+
+            }
+            ///============///
+
+        });
+
+
+        /////===========//////
+
+
+        //====================================================//
+
+ }
+    function viewFilteredData() {
+        var categorieshtml = "";
+        var chefName = "";
+        var categoryName = "";
+
+        if (selectedOptionCategroy == 0) {
+            var dbRecipes = firebase.database().ref("data").orderByKey();
+            dbRecipes.once("value").then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    if (childSnapshot.exists()) {
+
+                        var dbCategories = firebase.database().ref("categories");
+                        dbCategories.on("value", function (category) {
+                            categoryName = category.child(childSnapshot.key).val().n;
+                            ////
+                            var dbLevels = firebase.database().ref("data").child(childSnapshot.key).orderByKey();
+                            dbLevels.once("value").then(function (snapshotLevel) {
+                                snapshotLevel.forEach(function (childSnapshotLevel) {
+                                    var previousQuestionNumber = 0
+
+                                    if (childSnapshotLevel.exists()) {
+                                        console.log("---->" + snapshotLevel.numChildren() + "---->" + childSnapshotLevel.numChildren())
+
+
+                                        ////
+                                        childSnapshotLevel.forEach(function (question) {
+                                            //=======Check that question number is next to the previouse one=====//
+                                            if (question.key - 1 != previousQuestionNumber) {
+                                                // copy the data and add it to the missed key
+                                                var toBeDeleted = question.key;
+
+                                                var database5 = firebase.database().ref("data").child(childSnapshot.key).child(childSnapshotLevel.key).child(Number.parseInt(previousQuestionNumber) + 1);
+                                                database5.set(question.val());
+
+                                                previousQuestionNumber = Number.parseInt(previousQuestionNumber) + 1;
+                                                // delete the copied data with the old key
+                                                var database6 = firebase.database().ref("data").child(childSnapshot.key).child(childSnapshotLevel.key).child(toBeDeleted);
+                                                database6.remove();
+                                                viewFilteredData()
+
+                                            } else {
+                                                previousQuestionNumber = question.key;
+                                            }
+
+                                            ///=================================================================//
+
+
+                                            categorieshtml += "<tr>";
+
+                                            //for category name
+                                            categorieshtml += "<td>";
+                                            categorieshtml += category.child(childSnapshot.key).val().n;
+                                            categorieshtml += "</td>";
+
+                                            //for Level number
+                                            categorieshtml += "<td id='level'>";
+                                            categorieshtml += childSnapshotLevel.key;
+                                            categorieshtml += "</td>";
+
+                                            //for Question number
+                                            categorieshtml += "<td>";
+                                            categorieshtml += question.key;
+                                            categorieshtml += "</td>";
+
+                                            //for Question
+                                            if (question.val().q != undefined) {
+                                                categorieshtml += "<td>";
+                                                categorieshtml += question.val().q;
+                                                categorieshtml += "</td>";
+                                            } else {
+                                                categorieshtml += "<td>";
+                                                categorieshtml += "-";
+                                                categorieshtml += "</td>";
+                                            }
+
+                                            //for image
+                                            if (question.val().i != undefined) {
+                                                categorieshtml += "<td> <img width='100' height='60' src='";
+                                                categorieshtml += question.val().i;
+                                                categorieshtml += "' /></td>";
+                                            } else {
+                                                categorieshtml += "<td>";
+                                                categorieshtml += "-";
+                                                categorieshtml += "</td>";
+                                            }
+
+                                            //for Voice
+                                            if (question.val().s != undefined) {
+                                                categorieshtml += "<td> <a href=";
+                                                categorieshtml += question.val().s;
+                                                categorieshtml += " target='_blank' rel='noopener noreferrer'>" + "Play Audio" + "</a> </td>";
+                                            } else {
+                                                categorieshtml += "<td>";
+                                                categorieshtml += "-";
+                                                categorieshtml += "</td>";
+
+                                            }
+
+                                            //for Answer
+                                            categorieshtml += "<td>";
+                                            categorieshtml += question.val().a;
+                                            categorieshtml += "</td>";
+
+
+
+                                            //for edit button
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "<button type=\"button\" class=\"btn btn-primary btn-xs\" id=\"edit-button\"  data-toggle=\"modal\" data-target=\"#modalEditForm\">Edit</button>"
+                                            categorieshtml += "</td>";
+
+                                            //for delete button
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "<button type=\"button\" class=\"getid btn btn-danger\" id=\"delete-button\">Delete</button>"
+                                            categorieshtml += "</td>";
+
+                                            categorieshtml += "</tr>";
+                                            $("#categories").html(categorieshtml);
+                                        });
+
+                                    }
+                                });
+                            });
+
+                        });
+                    }
+
+
+                });
+
+            });
+
+
+
+        } else if (selectedOptionCategroy > 0 && selectedOptionLevel == 0) {
+
+           
+                    var dbCategories = firebase.database().ref("categories");
+                    dbCategories.on("value", function (category) {
+                        categoryName = category.child(selectedOptionCategroy).val().n;
+                        ////
+                        var dbLevels = firebase.database().ref("data").child(selectedOptionCategroy).orderByKey();
+                        dbLevels.once("value").then(function (snapshotLevel) {
+                            snapshotLevel.forEach(function (childSnapshotLevel) {
+                                var previousQuestionNumber = 0
+
+                                if (childSnapshotLevel.exists()) {
+                                    console.log("---->" + snapshotLevel.numChildren() + "---->" + childSnapshotLevel.numChildren())
+
+
+                                    ////
+                                    childSnapshotLevel.forEach(function (question) {
+                                        //=======Check that question number is next to the previouse one=====//
+                                        if (question.key - 1 != previousQuestionNumber) {
+                                            // copy the data and add it to the missed key
+                                            var toBeDeleted = question.key;
+
+                                            var database5 = firebase.database().ref("data").child(selectedOptionCategroy).child(childSnapshotLevel.key).child(Number.parseInt(previousQuestionNumber) + 1);
+                                            database5.set(question.val());
+
+                                            previousQuestionNumber = Number.parseInt(previousQuestionNumber) + 1;
+                                            // delete the copied data with the old key
+                                            var database6 = firebase.database().ref("data").child(selectedOptionCategroy).child(childSnapshotLevel.key).child(toBeDeleted);
+                                            database6.remove();
+                                            viewFilteredData()
+
+                                        } else {
+                                            previousQuestionNumber = question.key;
+                                        }
+
+                                        ///=================================================================//
+
+
+                                        categorieshtml += "<tr>";
+
+                                        //for category name
+                                        categorieshtml += "<td>";
+                                        categorieshtml += category.child(selectedOptionCategroy).val().n;
+                                        categorieshtml += "</td>";
+
+                                        //for Level number
+                                        categorieshtml += "<td id='level'>";
+                                        categorieshtml += childSnapshotLevel.key;
+                                        categorieshtml += "</td>";
+
+                                        //for Question number
+                                        categorieshtml += "<td>";
+                                        categorieshtml += question.key;
+                                        categorieshtml += "</td>";
+
+                                        //for Question
+                                        if (question.val().q != undefined) {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += question.val().q;
+                                            categorieshtml += "</td>";
+                                        } else {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "-";
+                                            categorieshtml += "</td>";
+                                        }
+
+                                        //for image
+                                        if (question.val().i != undefined) {
+                                            categorieshtml += "<td> <img width='100' height='60' src='";
+                                            categorieshtml += question.val().i;
+                                            categorieshtml += "' /></td>";
+                                        } else {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "-";
+                                            categorieshtml += "</td>";
+                                        }
+
+                                        //for Voice
+                                        if (question.val().s != undefined) {
+                                            categorieshtml += "<td> <a href=";
+                                            categorieshtml += question.val().s;
+                                            categorieshtml += " target='_blank' rel='noopener noreferrer'>" + "Play Audio" + "</a> </td>";
+                                        } else {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "-";
+                                            categorieshtml += "</td>";
+
+                                        }
+
+                                        //for Answer
+                                        categorieshtml += "<td>";
+                                        categorieshtml += question.val().a;
+                                        categorieshtml += "</td>";
+
+
+
+                                        //for edit button
+                                        categorieshtml += "<td>";
+                                        categorieshtml += "<button type=\"button\" class=\"btn btn-primary btn-xs\" id=\"edit-button\"  data-toggle=\"modal\" data-target=\"#modalEditForm\">Edit</button>"
+                                        categorieshtml += "</td>";
+
+                                        //for delete button
+                                        categorieshtml += "<td>";
+                                        categorieshtml += "<button type=\"button\" class=\"getid btn btn-danger\" id=\"delete-button\">Delete</button>"
+                                        categorieshtml += "</td>";
+
+                                        categorieshtml += "</tr>";
+                                        $("#categories").html(categorieshtml);
+                                    });
+
+                                }
+                            });
+                        });
+
+                    });
+               
+   
+
+        } else if (selectedOptionCategroy > 0 && selectedOptionLevel > 0) {
+
+            var dbCategories = firebase.database().ref("categories");
+                    dbCategories.on("value", function (category) {
+                        categoryName = category.child(selectedOptionCategroy).val().n;
+                        ////
+                        var dbLevels = firebase.database().ref("data").child(selectedOptionCategroy).child(selectedOptionLevel).orderByKey();
+                        dbLevels.once("value").then(function (childSnapshotLevel) {
+                            var previousQuestionNumber = 0
+
+                                    ////
+                                    childSnapshotLevel.forEach(function (question) {
+                                        //=======Check that question number is next to the previouse one=====//
+                                        if (question.key - 1 != previousQuestionNumber) {
+                                            // copy the data and add it to the missed key
+                                            var toBeDeleted = question.key;
+
+                                            var database5 = firebase.database().ref("data").child(selectedOptionCategroy).child(selectedOptionLevel).child(Number.parseInt(previousQuestionNumber) + 1);
+                                            database5.set(question.val());
+
+                                            previousQuestionNumber = Number.parseInt(previousQuestionNumber) + 1;
+                                            // delete the copied data with the old key
+                                            var database6 = firebase.database().ref("data").child(selectedOptionCategroy).child(selectedOptionLevel).child(toBeDeleted);
+                                            database6.remove();
+                                            viewFilteredData()
+
+                                        } else {
+                                            previousQuestionNumber = question.key;
+                                        }
+
+                                        ///=================================================================//
+
+
+                                        categorieshtml += "<tr>";
+
+                                        //for category name
+                                        categorieshtml += "<td>";
+                                        categorieshtml += category.child(selectedOptionCategroy).val().n;
+                                        categorieshtml += "</td>";
+
+                                        //for Level number
+                                        categorieshtml += "<td id='level'>";
+                                        categorieshtml += childSnapshotLevel.key;
+                                        categorieshtml += "</td>";
+
+                                        //for Question number
+                                        categorieshtml += "<td>";
+                                        categorieshtml += question.key;
+                                        categorieshtml += "</td>";
+
+                                        //for Question
+                                        if (question.val().q != undefined) {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += question.val().q;
+                                            categorieshtml += "</td>";
+                                        } else {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "-";
+                                            categorieshtml += "</td>";
+                                        }
+
+                                        //for image
+                                        if (question.val().i != undefined) {
+                                            categorieshtml += "<td> <img width='100' height='60' src='";
+                                            categorieshtml += question.val().i;
+                                            categorieshtml += "' /></td>";
+                                        } else {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "-";
+                                            categorieshtml += "</td>";
+                                        }
+
+                                        //for Voice
+                                        if (question.val().s != undefined) {
+                                            categorieshtml += "<td> <a href=";
+                                            categorieshtml += question.val().s;
+                                            categorieshtml += " target='_blank' rel='noopener noreferrer'>" + "Play Audio" + "</a> </td>";
+                                        } else {
+                                            categorieshtml += "<td>";
+                                            categorieshtml += "-";
+                                            categorieshtml += "</td>";
+
+                                        }
+
+                                        //for Answer
+                                        categorieshtml += "<td>";
+                                        categorieshtml += question.val().a;
+                                        categorieshtml += "</td>";
+
+
+
+                                        //for edit button
+                                        categorieshtml += "<td>";
+                                        categorieshtml += "<button type=\"button\" class=\"btn btn-primary btn-xs\" id=\"edit-button\"  data-toggle=\"modal\" data-target=\"#modalEditForm\">Edit</button>"
+                                        categorieshtml += "</td>";
+
+                                        //for delete button
+                                        categorieshtml += "<td>";
+                                        categorieshtml += "<button type=\"button\" class=\"getid btn btn-danger\" id=\"delete-button\">Delete</button>"
+                                        categorieshtml += "</td>";
+
+                                        categorieshtml += "</tr>";
+                                        $("#categories").html(categorieshtml);
+                                    });
+
+                        });
+
+                    });
+               
+   
+
+
+
+        }
+    }
+
+
+</script>
